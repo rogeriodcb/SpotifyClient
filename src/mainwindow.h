@@ -1,7 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "Spotify/spotify.h"
 #include <QMainWindow>
+#include <QThread>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,5 +32,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    Spotify *spotify;
 };
 #endif // MAINWINDOW_H

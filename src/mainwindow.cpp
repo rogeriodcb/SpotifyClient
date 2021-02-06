@@ -1,21 +1,30 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 #include <QtDebug>
 
+#include "Spotify/spotify.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
     // open QT main UI
     ui->setupUi(this);
+    this->showMinimized();
+    QThread::sleep(3);
+
+    // try to connect to Spotify
+    spotify = new Spotify();
+    this->showNormal();
 }
 
 MainWindow::~MainWindow()
 {
+    delete spotify;
     delete ui;
+
 }
 
 

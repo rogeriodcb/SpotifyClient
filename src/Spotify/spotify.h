@@ -3,18 +3,21 @@
 
 #include <QString>
 
+#include "../Settings/appsetup.h"
+#include "../Utils/jsonutils.h"
+#include "../Dialogs/spotifyconnection.h"
 
 class Spotify
 {
 public:
     Spotify();
+    ~Spotify();
+
 
 private:
-    // Spotify variables
-    QString clientId;
-    QString clientSecretId;
-    QString clientToken;
-    QString clientRefreshToken;
+    AppSetup *appSetup;
+    JsonUtils *json;
+    SpotifyConnection *spotifyConnection;
 };
 
 #endif // SPOTIFY_H
