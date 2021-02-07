@@ -29,6 +29,8 @@ public:
     void deleteClientRefreshToken();
     void deleteAllClientSetup();
 
+
+
 };
 
 #endif // APPSETUP_H

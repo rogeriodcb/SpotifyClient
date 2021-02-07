@@ -2,6 +2,7 @@
 #define SPOTIFYCONNECTION_H
 
 #include "../Settings/appsetup.h"
+#include "../Utils/jsonutils.h"
 #include <QDialog>
 #include <QDesktopServices>
 #include <QtDebug>
@@ -39,10 +40,11 @@ private slots:
 
 private:
     Ui::SpotifyConnection *ui;
-    AppSetup *appSetup=nullptr;
-    QTcpServer *server=nullptr;
-    QString redirect="";
+    AppSetup *appSetup;
+    QTcpServer *server;
+    QString redirect;
     QString error;
+    JsonUtils *json;
 };
 
 #endif // SPOTIFYCONNECTION_H

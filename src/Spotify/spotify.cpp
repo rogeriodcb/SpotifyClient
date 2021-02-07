@@ -10,13 +10,13 @@ Spotify::Spotify()
     // create dynimic variables
     appSetup = new AppSetup();
     json = new JsonUtils();
+    spotifyConnection = new SpotifyConnection(appSetup);
 
     // verify if config file information is present
     if(!json->readAppConfig(appSetup)){
         // no config file detected. So, get the clientId and clientSecreteId from user
-        spotifyConnection = new SpotifyConnection(appSetup);
         spotifyConnection->show();
-        spotifyConnection->setWindowState(Qt::WindowState::WindowActive);
+
     }
     else
         qDebug() << "Configuration loaded successfully.";
@@ -31,7 +31,6 @@ Spotify::Spotify()
 Spotify::~Spotify(){
     delete appSetup;
     delete json;
-
-    if (spotifyConnection!=NULL)
-        delete spotifyConnection;
+    delete spotifyConnection;
 }
+

@@ -2,6 +2,8 @@
 #define SPOTIFY_H
 
 #include <QString>
+#include <QThread>
+#include <QMessageBox>
 
 #include "../Settings/appsetup.h"
 #include "../Utils/jsonutils.h"
@@ -12,7 +14,6 @@ class Spotify
 public:
     Spotify();
     ~Spotify();
-
 
 private:
     AppSetup *appSetup;

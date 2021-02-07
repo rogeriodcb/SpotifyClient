@@ -27,7 +27,6 @@ public:
     void setConfigFilePath(QString filePath);
     QString getConfigFilePath();
 
-
 };
 
 #endif // JSONUTILS_H

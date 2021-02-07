@@ -12,21 +12,37 @@ MainWindow::MainWindow(QWidget *parent)
 {
     // open QT main UI
     ui->setupUi(this);
-    this->showMinimized();
-    QThread::sleep(3);
 
-    // try to connect to Spotify
-    spotify = new Spotify();
-    this->showNormal();
+    // initialize attributes
+    spotify = nullptr;
+    this->installEventFilter(this);
+
+
 }
 
 MainWindow::~MainWindow()
 {
-    delete spotify;
+    if(spotify !=nullptr)
+        delete spotify;
     delete ui;
 
 }
 
+bool MainWindow::eventFilter(QObject * obj, QEvent * event)
+{
+    if(obj == this && event->type() == QEvent::Show)
+    {
+        QTimer::singleShot(50, this, SLOT(initialize()));
+    }
+
+    return false;
+}
+
+void MainWindow::initialize()
+{
+    // try to connect to Spotify
+    spotify = new Spotify();
+}
 
 void MainWindow::on_LoadButton_clicked()
 {

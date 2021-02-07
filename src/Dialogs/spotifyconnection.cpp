@@ -8,15 +8,17 @@ SpotifyConnection::SpotifyConnection(AppSetup *appSetup, QWidget *parent) :
     ui->setupUi(this);
 
     // initialize private attributes
+    this->appSetup=appSetup;
     server = nullptr;
     redirect = QString("http://localhost:8888");
-    this->appSetup=appSetup;
     error="";
+    json = new JsonUtils();
 
 }
 
 SpotifyConnection::~SpotifyConnection()
 {
+    delete json;
     delete ui;
 }
 
@@ -87,6 +89,7 @@ void SpotifyConnection::on_authenticateButton_clicked()
         if (!response.contains("?code="))
         {
             socket->close();
+            //error = "Client Id or Client Secrete was incorrect.";
             return;
         }
         qDebug() << "5) Code extraction" << endl;
@@ -103,6 +106,8 @@ void SpotifyConnection::on_authenticateButton_clicked()
                       .arg(status.isEmpty()
                            ? "Success ! Now you can return to Spotify Client app."
                            : QString("failed to authenticate: %1").arg(status)).toUtf8());
+
+
         socket->flush();
         socket->waitForBytesWritten(3000);
         socket->close();
@@ -116,23 +121,30 @@ void SpotifyConnection::on_authenticateButton_clicked()
 
                 appSetup->setClientId(ui->clientIDText->toPlainText());
                 appSetup->setClientSecreteId(ui->clientSecretIdText->toPlainText());
+                json->writeAppConfig(appSetup);
             }
             else
             {
                 qDebug() << "   7.1) Error: application setup attributes were note stored." << endl;
+                //error = "Error: application setup attributes were note stored.";
             }
-            qDebug() << "   7.2) close server" << endl;
+
+            qDebug() << "8) close server" << endl;
 
             server->close();
             delete server;
-            server->close();
+            delete networkManager;
+            accept();
+
         }
         else
         {
             qDebug() << "ERROR: an error ocurr while getting code";
+            //error = "an error ocurr while getting code";
         }
 
     });
+
 }
 
 

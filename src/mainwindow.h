@@ -3,7 +3,7 @@
 
 #include "Spotify/spotify.h"
 #include <QMainWindow>
-#include <QThread>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,8 +16,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    bool eventFilter(QObject * obj, QEvent * event);
 
 private slots:
+    void initialize();
+
     void on_LoadButton_clicked();
 
     void on_SaveButton_clicked();
