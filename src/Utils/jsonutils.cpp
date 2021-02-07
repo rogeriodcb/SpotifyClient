@@ -109,7 +109,7 @@ bool JsonUtils::readAppConfig(AppSetup *setup)
         setup->setClientId(json["clientId"].toString());
 
     if (json.contains("clientSecreteId") && json["clientSecreteId"].isString())
-        setup->setClientSecreteId(json["clientSecreteId"].toString());
+        setup->setClientSecretId(json["clientSecreteId"].toString());
 
     return true;
 }
@@ -126,7 +126,7 @@ void JsonUtils::writeAppConfig(AppSetup *setup)
     QJsonObject json;
 
     json["clientId"] = setup->getClientId();
-    json["clientSecreteId"] = setup->getClientSecreteId();
+    json["clientSecreteId"] = setup->getClientSecretId();
 
     QByteArray outJsonData = QJsonDocument(json).toJson();
     QString fo = QString("%1/%2").arg(configFilePath).arg("SpotifyClientConfig.json");

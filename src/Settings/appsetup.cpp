@@ -22,13 +22,23 @@ QString AppSetup::getClientId()
 }
 
 /********************************
-* getClientSecreteId
+* getClientSecretId
 *********************************
 * Get the private variable
-* clientSecreteId
+* clientSecretId
 *********************************/
-QString AppSetup::getClientSecreteId(){
-    return clientSecreteId;
+QString AppSetup::getClientSecretId(){
+    return clientSecretId;
+}
+
+/********************************
+* getClientCode
+*********************************
+* Get the private variable
+* clientCode
+*********************************/
+QString AppSetup::getClientCode(){
+    return clientCode;
 }
 
 /********************************
@@ -62,13 +72,23 @@ void AppSetup::setClientId(QString clientId){
 }
 
 /********************************
-* setClientSecreteId
+* setClientSecretId
 *********************************
 * Set the private variable
-* clientSecreteId
+* clientSecretId
 *********************************/
-void AppSetup::setClientSecreteId(QString clientSecreteId){
-    this->clientSecreteId = clientSecreteId;
+void AppSetup::setClientSecretId(QString clientSecretId){
+    this->clientSecretId = clientSecretId;
+}
+
+/********************************
+* setClientCode
+*********************************
+* Set the private variable
+* clientCode
+*********************************/
+void AppSetup::setClientCode(QString clientCode){
+    this->clientCode = clientCode;
 }
 
 /********************************
@@ -102,13 +122,23 @@ void AppSetup::deleteClientId(){
 }
 
 /********************************
-* deleteClientSecreteId
+* deleteClientSecretId
 *********************************
 * Delete the value from private
-* variable clientSecreteId
+* variable clientSecretId
 *********************************/
-void AppSetup::deleteClientSecreteId(){
-    clientSecreteId = "";
+void AppSetup::deleteClientSecretId(){
+    clientSecretId = "";
+}
+
+/********************************
+* deleteClientCode
+*********************************
+* Delete the value from private
+* variable clientCode
+*********************************/
+void AppSetup::deleteClientCode(){
+    clientCode = "";
 }
 
 /********************************
@@ -139,7 +169,8 @@ void AppSetup::deleteClientRefreshToken(){
 *********************************/
 void AppSetup::deleteAllClientSetup(){
     clientId = "";
-    clientSecreteId="";
+    clientSecretId="";
+    clientCode="";
     clientToken = "";
     clientRefreshToken="";
 }

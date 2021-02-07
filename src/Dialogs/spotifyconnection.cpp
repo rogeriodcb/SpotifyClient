@@ -8,6 +8,7 @@ SpotifyConnection::SpotifyConnection(AppSetup *appSetup, QWidget *parent) :
     ui->setupUi(this);
 
     // initialize private attributes
+    networkManager = new QNetworkAccessManager();
     this->appSetup=appSetup;
     server = nullptr;
     redirect = QString("http://localhost:8888");
@@ -18,6 +19,7 @@ SpotifyConnection::SpotifyConnection(AppSetup *appSetup, QWidget *parent) :
 
 SpotifyConnection::~SpotifyConnection()
 {
+    delete networkManager;
     delete json;
     delete ui;
 }
@@ -31,8 +33,14 @@ void SpotifyConnection::on_dashboardButton_clicked()
 
 void SpotifyConnection::on_authenticateButton_clicked()
 {
+   getSpotifyConnectionCode(ui->clientIDText->toPlainText(),ui->clientSecretIdText->toPlainText());
+
+}
+
+QString SpotifyConnection::getSpotifyConnectionCode(QString clientId,QString clientSecretId)
+{
     qDebug() << "Initialize connection. Please wait..." << endl;
-    networkManager = new QNetworkAccessManager();
+    //networkManager = new QNetworkAccessManager();
     QString url;
     QStringList scopes = {
             "playlist-read-collaborative",
@@ -55,7 +63,7 @@ void SpotifyConnection::on_authenticateButton_clicked()
 
     QUrl redirectUrl(redirect);
     url = QString("https://accounts.spotify.com/authorize?client_id=%1&response_type=code&redirect_uri=%2&scope=%3")
-            .arg(ui->clientIDText->toPlainText())
+            .arg(clientId)
             .arg(QString(redirectUrl.toEncoded()))
             .arg(scopes.join("%20"));
 
@@ -72,11 +80,13 @@ void SpotifyConnection::on_authenticateButton_clicked()
                              "server error",
                              QString("failed to start a temporary server on port 8888: %1")
                              .arg(server->errorString()));
-        return;
+        return "failed to start a temporaray server on port 8888";
     }
+
+
     qDebug() << "3) Try to connect" << endl;
 
-    QTcpServer::connect(server, &QTcpServer::newConnection, [this]()
+    QTcpServer::connect(server, &QTcpServer::newConnection, [this,clientId,clientSecretId]()
     {
         // Read
         auto socket = server->nextPendingConnection();
@@ -97,7 +107,7 @@ void SpotifyConnection::on_authenticateButton_clicked()
         // GET /?code=<code> HTTP...
         auto left = response.left(response.indexOf(" HTTP"));
         auto code = left.right(left.length() - left.indexOf("?code=") - 6);
-        auto status = auth(code, redirect, ui->clientIDText->toPlainText(), ui->clientSecretIdText->toPlainText());
+        auto status = auth(code, redirect,clientId,clientSecretId);
 
         qDebug() << "6) Write message in browser" << endl;
 
@@ -113,14 +123,15 @@ void SpotifyConnection::on_authenticateButton_clicked()
         socket->close();
         // Close it all down if ok
         if (status.isEmpty())
+
         {
             qDebug() << "7) Finalizing..." << endl;
             if(appSetup!=nullptr)
             {
                 qDebug() << "   7.1) set app variables" << endl;
 
-                appSetup->setClientId(ui->clientIDText->toPlainText());
-                appSetup->setClientSecreteId(ui->clientSecretIdText->toPlainText());
+                appSetup->setClientId(clientId);
+                appSetup->setClientSecretId(clientSecretId);
                 json->writeAppConfig(appSetup);
             }
             else
@@ -133,7 +144,11 @@ void SpotifyConnection::on_authenticateButton_clicked()
 
             server->close();
             delete server;
-            delete networkManager;
+            //delete networkManager;
+            //networkManager=nullptr;
+
+            qDebug() << "#debug Token: " << appSetup->getClientToken();
+
             accept();
 
         }
@@ -144,7 +159,7 @@ void SpotifyConnection::on_authenticateButton_clicked()
         }
 
     });
-
+    return error;
 }
 
 
@@ -177,7 +192,7 @@ QString SpotifyConnection::auth(const QString &code, const QString &redirect, co
     if (jsonData.contains("error_description"))
         return jsonData["error_description"].toString();
 
-    // Save access/refresh token to settings
+    // keep access into private attributes in AppSetup class
     appSetup->setClientToken(jsonData["access_token"].toString());
     appSetup->setClientRefreshToken(jsonData["refresh_token"].toString());
 

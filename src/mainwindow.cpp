@@ -42,6 +42,7 @@ void MainWindow::initialize()
 {
     // try to connect to Spotify
     spotify = new Spotify();
+
 }
 
 void MainWindow::on_LoadButton_clicked()

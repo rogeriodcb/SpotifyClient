@@ -31,7 +31,7 @@ public:
     QNetworkAccessManager *networkManager;
 
     QString auth(const QString &code, const QString &redirect, const QString &id, const QString &secret);
-
+    QString getSpotifyConnectionCode(QString clientId, QString clientSecretId);
 
 private slots:
 

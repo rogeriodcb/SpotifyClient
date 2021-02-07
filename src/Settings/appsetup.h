@@ -8,23 +8,27 @@ class AppSetup
 
 private:
     QString clientId;
-    QString clientSecreteId;
+    QString clientSecretId;
+    QString clientCode;
     QString clientToken;
     QString clientRefreshToken;
 public:
     AppSetup();
     QString getClientId();
-    QString getClientSecreteId();
+    QString getClientSecretId();
+    QString getClientCode();
     QString getClientToken();
     QString getClientRefreshToken();
 
     void setClientId(QString clientId);
-    void setClientSecreteId(QString clientSecreteId);
+    void setClientSecretId(QString clientSecretId);
+    void setClientCode(QString clientCode);
     void setClientToken(QString clientToken);
     void setClientRefreshToken(QString clientRefreshToken);
 
     void deleteClientId();
-    void deleteClientSecreteId();
+    void deleteClientSecretId();
+    void deleteClientCode();
     void deleteClientToken();
     void deleteClientRefreshToken();
     void deleteAllClientSetup();

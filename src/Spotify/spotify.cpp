@@ -11,6 +11,7 @@ Spotify::Spotify()
     appSetup = new AppSetup();
     json = new JsonUtils();
     spotifyConnection = new SpotifyConnection(appSetup);
+    QString s;
 
     // verify if config file information is present
     if(!json->readAppConfig(appSetup)){
@@ -19,7 +20,22 @@ Spotify::Spotify()
 
     }
     else
-        qDebug() << "Configuration loaded successfully.";
+    {
+        qDebug() << "Configuration loaded successfully. Authorizing...";
+        if ((s=spotifyConnection->getSpotifyConnectionCode(appSetup->getClientId(),
+                                appSetup->getClientSecretId())).isEmpty())
+            qDebug()<<"Authorization concluded.";
+        else
+        {
+            qDebug() <<"Authorization failed. Error: "<<s;
+            spotifyConnection->show();
+
+        }
+
+
+
+    }
+
 
 }
 
