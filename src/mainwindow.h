@@ -2,8 +2,10 @@
 #define MAINWINDOW_H
 
 #include "Spotify/spotify.h"
+#include "Dialogs/search.h"
 #include <QMainWindow>
 #include <QTimer>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>366</width>
-    <height>404</height>
+    <width>703</width>
+    <height>455</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>341</width>
+      <width>681</width>
       <height>41</height>
      </rect>
     </property>
@@ -29,14 +29,37 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
+    <widget class="QTextEdit" name="SearchText">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>5</y>
+       <width>551</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="SearchButton">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>10</y>
+       <width>51</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Search</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>60</y>
-      <width>341</width>
-      <height>251</height>
+      <y>170</y>
+      <width>681</width>
+      <height>191</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -45,21 +68,11 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QListWidget" name="PlayList">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>321</width>
-       <height>221</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>0</y>
+       <y>10</y>
        <width>55</width>
        <height>16</height>
       </rect>
@@ -68,14 +81,27 @@
       <string>PlayList</string>
      </property>
     </widget>
+    <widget class="QListWidget" name="PlayList">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>661</width>
+       <height>131</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="frame_3">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>320</y>
-      <width>341</width>
-      <height>41</height>
+      <y>370</y>
+      <width>681</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -110,23 +136,10 @@
       <string>Save</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="SearchButton">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>0</y>
-       <width>51</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Search</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="PlayButton">
      <property name="geometry">
       <rect>
-       <x>170</x>
+       <x>270</x>
        <y>0</y>
        <width>51</width>
        <height>28</height>
@@ -139,7 +152,7 @@
     <widget class="QPushButton" name="ExitButton">
      <property name="geometry">
       <rect>
-       <x>290</x>
+       <x>620</x>
        <y>0</y>
        <width>51</width>
        <height>28</height>
@@ -152,7 +165,7 @@
     <widget class="QPushButton" name="StopButton">
      <property name="geometry">
       <rect>
-       <x>220</x>
+       <x>330</x>
        <y>0</y>
        <width>51</width>
        <height>28</height>
@@ -163,13 +176,42 @@
      </property>
     </widget>
    </widget>
+   <widget class="QFrame" name="frame_4">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>681</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QListWidget" name="SearchList">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>661</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>366</width>
+     <width>703</width>
      <height>26</height>
     </rect>
    </property>

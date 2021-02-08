@@ -99,7 +99,7 @@ QString SpotifyConnection::getSpotifyConnectionCode(QString clientId,QString cli
         if (!response.contains("?code="))
         {
             socket->close();
-            //error = "Client Id or Client Secrete was incorrect.";
+            error = "Client Id or Client Secrete was incorrect.";
             return;
         }
         qDebug() << "5) Code extraction" << endl;
@@ -137,17 +137,13 @@ QString SpotifyConnection::getSpotifyConnectionCode(QString clientId,QString cli
             else
             {
                 qDebug() << "   7.1) Error: application setup attributes were note stored." << endl;
-                //error = "Error: application setup attributes were note stored.";
+                error = "Error: application setup attributes were note stored.";
             }
 
             qDebug() << "8) close server" << endl;
 
             server->close();
             delete server;
-            //delete networkManager;
-            //networkManager=nullptr;
-
-            qDebug() << "#debug Token: " << appSetup->getClientToken();
 
             accept();
 
@@ -155,7 +151,7 @@ QString SpotifyConnection::getSpotifyConnectionCode(QString clientId,QString cli
         else
         {
             qDebug() << "ERROR: an error ocurr while getting code";
-            //error = "an error ocurr while getting code";
+            error = "an error ocurr while getting code";
         }
 
     });

@@ -8,6 +8,8 @@
 #include <QJsonParseError>
 #include <QtDebug>
 #include <QDir>
+#include <QStringList>
+#include <QJsonArray>
 
 #include "../Settings/appsetup.h"
 
@@ -26,6 +28,10 @@ public:
     QJsonDocument openJsonFile(QString filePath );
     void setConfigFilePath(QString filePath);
     QString getConfigFilePath();
+    QStringList getTrackInfo(QJsonObject json);
+    QStringList readPlayList();
+    void savePlayList(QStringList *sList);
+
 
 };
 

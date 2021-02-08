@@ -140,3 +140,69 @@ void JsonUtils::writeAppConfig(AppSetup *setup)
 
 }
 
+/********************************
+* getTrackInfo
+*********************************
+* Get JsonObject information about
+* the track.
+*********************************/
+QStringList JsonUtils::getTrackInfo(QJsonObject json)
+{
+    //TODO: loop in json spotify track info to get all necessary information
+    if (json.isEmpty())
+            return QStringList();
+
+    // Search Tracks
+    foreach(const QString& key, json.keys()) {
+            QJsonValue value = json.value(key);
+            qDebug() << "Key = " << key << ", Value = " << value.toString();
+        }
+    /*
+    if (json.contains("name") && json["name"].isString())
+        qDebug()<<(json["name"].toString());
+    */
+    return QStringList();
+
+}
+
+
+/********************************
+* readPlayList
+*********************************
+* Read offline Playlist.
+*********************************/
+QStringList JsonUtils::readPlayList()
+{
+    // TODO: keep the tracks into a "track config" class to improve the data consume
+    QStringList sList;
+    QJsonObject json = (openJsonFile(QString("%1/%2")
+        .arg(configFilePath)
+        .arg("SpotifyClientPlaylist.json")))
+        .object();
+
+    if (json.isEmpty())
+            return QStringList();
+
+    // load Playlist
+    QJsonValue value = json.value("tracks");
+    QJsonArray array = value.toArray();
+    foreach (const QJsonValue & v, array)
+        sList.append(QString("%1   %2   %3")
+                     .arg(v.toObject().value("artistName").toString())
+                     .arg(v.toObject().value("musicName").toString())
+                     .arg(v.toObject().value("href").toString())
+                          );
+
+    return sList;
+}
+
+/********************************
+* savePlayList
+*********************************
+* Save offline Playlist.
+*********************************/
+void JsonUtils::savePlayList(QStringList *sList)
+{
+ // TODO: get values from class attributes and save to the disk.
+
+}

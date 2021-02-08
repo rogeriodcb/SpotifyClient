@@ -22,10 +22,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+
     if(spotify !=nullptr)
         delete spotify;
     delete ui;
-
+    qDebug() << "Thank you for using the Spotify Client application.";
 }
 
 bool MainWindow::eventFilter(QObject * obj, QEvent * event)
@@ -41,25 +42,46 @@ bool MainWindow::eventFilter(QObject * obj, QEvent * event)
 void MainWindow::initialize()
 {
     // try to connect to Spotify
-    spotify = new Spotify();
+    spotify = new Spotify(this);
+    ui->PlayList->addItems(spotify->loadPlayList());
 
 }
 
 void MainWindow::on_LoadButton_clicked()
 {
-    qDebug() << "#debug: Load button pressed";
+    ui->PlayList->clear();
+    ui->PlayList->addItems(spotify->loadPlayList());
 }
 
 void MainWindow::on_SaveButton_clicked()
 {
     qDebug() << "#debug: Save button pressed";
-
 }
 
 void MainWindow::on_SearchButton_clicked()
 {
-    qDebug() << "#debug: Search button pressed";
+   qDebug() << "Start searching...";
+   QJsonDocument json=spotify->spotifySearch(ui->SearchText->toPlainText(),"track");
 
+
+   if (json ==QJsonDocument::fromJson(""))
+   {
+       ui->SearchList->addItem("no search result");
+       qDebug() << "No search results.";
+       return;
+   }
+   qDebug()<<"Json read: " << endl << json;
+
+   // TODO: implement the json parser for the search
+
+   /*
+   auto jsonObject = json.object();
+   JsonUtils *jutils = new JsonUtils();
+   ui->SearchList->addItems(jutils->getTrackInfo(jsonObject));
+   delete jutils;
+   */
+
+   qDebug() << "Search done.";
 }
 
 void MainWindow::on_PlayButton_clicked()
@@ -76,6 +98,5 @@ void MainWindow::on_StopButton_clicked()
 
 void MainWindow::on_ExitButton_clicked()
 {
-    qDebug() << "#debug: Exit button pressed";
-
+    QApplication::exit();
 }
